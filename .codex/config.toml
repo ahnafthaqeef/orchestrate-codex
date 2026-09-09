@@ -1,0 +1,5 @@
+# Project-scoped defaults for current Codex clients.
+# Keep the main agent's model and permissions under the user's control.
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 3

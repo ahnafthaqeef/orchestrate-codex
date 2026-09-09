@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+.ringkas/
+.state/
+work/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
