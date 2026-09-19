@@ -22,10 +22,10 @@ unavailable dependencies and skipped checks separately from failures.
 Supply the architect only the unresolved question, expected and actual behavior,
 minimal reproduction, relevant code paths, failed attempts with results, and allowed
 tradeoffs. A model change does not add authorization for deployment or data access.
-If more effort is needed, the parent obtains the user's approval before a higher-effort pass.
-For an approved effort override, account for custom-agent settings taking precedence:
-use a generic native agent with the architect remit and the approved settings when
-the named agent is pinned to medium; do not claim a spawn override changed a pinned role.
+The architect inherits the parent session's model and reasoning effort. GPT-6 Astra
+at low effort may proceed normally. Before every architect launch or retry with
+GPT-6 Astra at medium effort or higher, remind the user about the elevated effort and
+obtain two separate explicit confirmations. Earlier task approval does not count.
 
 ## Result contract
 

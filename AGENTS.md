@@ -7,6 +7,6 @@ This repository packages a Codex routing skill. Keep it generic and portable.
 - Preserve existing user changes. Keep credentials, private memories, internal resumes, and personal data out of this bundle.
 - New repositories default to private. Before pushing, verify the destination using `gh repo view <owner>/<repo> --json visibility,isPrivate`. Do not change visibility without the user's instruction.
 - Use recoverable removal only. Hash-check duplicates before removing copies. Do not relocate worktrees manually.
-- Do not introduce SDK calls, API credentials, paid services, or global configuration changes as part of routing.
-- Validate changes with `python scripts/validate.py`. Check Codex configuration documentation before changing supported fields. Do not claim schema checks prove live model dispatch.
+- Do not introduce SDK calls, API credentials, or paid services as part of routing. User-wide installation changes must be explicit, narrowly marked, idempotent, and preserve unrelated configuration.
+- Validate changes with `python scripts/validate.py` and `python scripts/test_install.py`. Check Codex configuration documentation before changing supported fields. Do not claim schema checks prove live model dispatch.
 - Write clear, concise output without em dashes.

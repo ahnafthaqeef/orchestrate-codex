@@ -16,7 +16,7 @@ delegation for those units; it does not require agents for every task.
 | scout | gpt-5.6-luna / low | Targeted recon, extraction, code mapping |
 | researcher | gpt-5.6-terra / medium | Source verification, comparisons, drafts returned to parent |
 | coder | gpt-5.6-sol / high | Scoped implementation and relevant checks |
-| architect | gpt-6-astra / medium | One unresolved hard problem after a normal attempt |
+| architect | inherit session model / effort | One unresolved hard problem after a normal attempt |
 
 These are configurable starting choices, not a measured price or quality ranking.
 Keep an explicitly selected user model or budget. Use only model and effort pairs
@@ -45,8 +45,12 @@ it with API calls, external coding services, or new user-visible tasks.
 
 Correct missing context or a setup error at the same level first. Escalate only the
 unresolved reasoning problem, carrying the evidence and failed attempts with it.
-After an unsuccessful architect medium pass, explain the remaining problem and ask
-before a higher-effort architect run. This is this bundle's usage-control convention,
-not a Codex platform requirement. Keep any approval already granted for the same run.
+The architect inherits the model and reasoning effort selected for the parent session.
+When that selection is GPT-6 Astra at low effort, the architect may proceed normally.
+Before launching GPT-6 Astra at medium effort or higher, remind the user that the
+architect will use the session's elevated Astra effort and obtain two separate,
+explicit confirmations. Do not combine the confirmations or treat earlier task
+approval as either confirmation. This gate applies to every architect launch or retry.
+After an unsuccessful architect pass, explain the remaining problem before retrying.
 Permission failures are returned to the parent, never treated as a reason to use a
 stronger model or weaker sandbox.

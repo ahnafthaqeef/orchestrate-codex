@@ -13,11 +13,15 @@ def validate():
     roles = {}
     for path in sorted((ROOT / '.codex/agents').glob('*.toml')):
         role = tomllib.loads(path.read_text(encoding='utf-8'))
-        for key in ('name', 'description', 'developer_instructions', 'model', 'model_reasoning_effort'):
+        for key in ('name', 'description', 'developer_instructions'):
             assert isinstance(role.get(key), str) and role[key].strip(), (path, key)
         assert role['name'] == path.stem, path
         assert role['name'] not in roles, path
-        assert role['model_reasoning_effort'] in {'low', 'medium', 'high'}, path
+        if role['name'] == 'architect':
+            assert 'model' not in role and 'model_reasoning_effort' not in role, path
+        else:
+            assert isinstance(role.get('model'), str) and role['model'].strip(), path
+            assert role.get('model_reasoning_effort') in {'low', 'medium', 'high'}, path
         if role['name'] != 'coder':
             assert role.get('sandbox_mode') == 'read-only', path
         assert 'approval_policy' not in role, path
@@ -28,7 +32,11 @@ def validate():
     assert content.startswith('---\nname: orchestrate\ndescription: ')
     assert len(content.split('---', 2)) == 3
     for role in roles.values():
-        assert role['model'] in content, role['name']
+        if role['name'] != 'architect':
+            assert role['model'] in content, role['name']
+    assert 'inherit session model / effort' in content
+    assert 'two separate' in content
+    assert (ROOT / 'scripts/install.py').is_file()
     for path in ROOT.rglob('*.md'):
         if '.git' in path.parts:
             continue
@@ -38,7 +46,7 @@ def validate():
             if not target.startswith(('https://', 'http://', '#')):
                 assert (path.parent / target.split('#')[0]).exists(), (path, target)
     assert (ROOT / 'LICENSE').is_file()
-    print('PASS: 4 role configs, project config, skill metadata, model mapping, links, and text checks')
+    print('PASS: 4 roles, inherited architect settings, project config, skill metadata, links, and installer')
 
 
 if __name__ == '__main__':
